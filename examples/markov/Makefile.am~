@@ -1,0 +1,14 @@
+top=../..
+
+AM_CXXFLAGS=-Wall -std=c++0x -I${top}/src/
+AM_LDFLAGS = -L${top}/src
+
+LDADD = -lmetasim
+
+EXTRA_DIST = README
+
+noinst_PROGRAMS = markov
+
+markov_SOURCES = markov.cpp markov.hpp
+
+CLEANFILES = log.txt
