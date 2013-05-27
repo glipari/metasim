@@ -97,7 +97,13 @@ example, you can have this directory structure:
                          +-- test ...
 
 
-Once you have unpacked the gtest library in the right place, just type 
+Once you have unpacked the gtest library in the right place, you have to compile it 
+by moving into gtest-1.6.0 and run 
+
+  ./configure
+  make
+
+Finally, you can return into the metasim directory and type 
 
   make check
 
