@@ -31,7 +31,7 @@
 #endif
 #endif
 
-#define MAXTICK LLONG_MAX
+#define MAXTICK INT64_MAX
 
 #define FRIEND_DECL_SYMM_OPS(RET, OP)  \
         friend RET operator OP (const Tick &t1, const Tick &t2); \
@@ -111,9 +111,9 @@ namespace MetaSim {
 
     public:
         Tick() { v = 0; }
-#if __WORDSIZE == 64
-        Tick(long long int t) { v = t; }
-#endif
+// #if __WORDSIZE == 64
+//         Tick(long long int t) { v = t; }
+// #endif
         Tick(impl_t t) { v = t; }
         Tick(int t) { v = t; }
 
