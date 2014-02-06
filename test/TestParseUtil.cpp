@@ -5,12 +5,12 @@
 #include <entity.hpp>
 #include "myentity.hpp"
 
-#include "gtest/gtest.h"
+#include "catch.hpp"
 
 using namespace MetaSim;
 using namespace std;
 
-TEST(ParseUtil, split)
+TEST_CASE("ParseUtil", "split")
 {
     string a = "token1 token2 token3";
     string b = "instr1; instr2; instr3;";
@@ -19,27 +19,27 @@ TEST(ParseUtil, split)
   
     vector<string> tokens = parse_util::split(a, " ");
  
-    EXPECT_TRUE(tokens.size() == 3);
-    EXPECT_TRUE(tokens[0] == "token1");
-    EXPECT_TRUE(tokens[1] == "token2");
-    EXPECT_TRUE(tokens[2] == "token3");
+    REQUIRE(tokens.size() == 3);
+    REQUIRE(tokens[0] == "token1");
+    REQUIRE(tokens[1] == "token2");
+    REQUIRE(tokens[2] == "token3");
 
     tokens = parse_util::split_instr(b);
   
-    EXPECT_TRUE(tokens.size() == 3);
-    EXPECT_TRUE(tokens[0] == "instr1");
-    EXPECT_TRUE(tokens[1] == "instr2");
-    EXPECT_TRUE(tokens[2] == "instr3");
+    REQUIRE(tokens.size() == 3);
+    REQUIRE(tokens[0] == "instr1");
+    REQUIRE(tokens[1] == "instr2");
+    REQUIRE(tokens[2] == "instr3");
 
     tokens = parse_util::split_instr(c);
   
-    EXPECT_TRUE(tokens.size() == 3);
-    EXPECT_TRUE(tokens[0] == "code1(a,b)");
-    EXPECT_TRUE(tokens[1] == "code2(a,b)");
-    EXPECT_TRUE(tokens[2] == "code3(a, b, c)");
+    REQUIRE(tokens.size() == 3);
+    REQUIRE(tokens[0] == "code1(a,b)");
+    REQUIRE(tokens[1] == "code2(a,b)");
+    REQUIRE(tokens[2] == "code3(a, b, c)");
 }
 
-TEST(ParseUtil, getparam)
+TEST_CASE("ParseUtil2", "getparam")
 {
     string a = "token1 token2 token3";
     string b = "instr1; instr2; instr3;";
@@ -49,25 +49,25 @@ TEST(ParseUtil, getparam)
     vector<string> tokens;
 
     tokens = parse_util::split_instr(c);
-    EXPECT_TRUE(tokens.size() == 3);
+    REQUIRE(tokens.size() == 3);
 
     string tok = parse_util::get_token(tokens[0]);
     string param = parse_util::get_param(tokens[0]);
-    EXPECT_TRUE(tok == "code1");
-    EXPECT_TRUE(param == "a,b");
+    REQUIRE(tok == "code1");
+    REQUIRE(param == "a,b");
 
     tok = parse_util::get_token(tokens[1]);
     param = parse_util::get_param(tokens[1]);
-    EXPECT_TRUE(tok == "code2");
-    EXPECT_TRUE(param == "a,b");
+    REQUIRE(tok == "code2");
+    REQUIRE(param == "a,b");
 
     tok = parse_util::get_token(tokens[2]);
     param = parse_util::get_param(tokens[2]);
-    EXPECT_TRUE(tok == "code3");
-    EXPECT_TRUE(param == "a, b, c");
+    REQUIRE(tok == "code3");
+    REQUIRE(param == "a, b, c");
 }
 
-TEST(ParseUtil, splitparam)
+TEST_CASE("ParseUtil3", "splitparam")
 {
     string a = "token1 token2 token3";
     string b = "instr1; instr2; instr3;";
@@ -81,32 +81,32 @@ TEST(ParseUtil, splitparam)
     vector<string> params;
 
     tokens = parse_util::split_instr(c);
-    EXPECT_TRUE(tokens.size() == 3);
+    REQUIRE(tokens.size() == 3);
 
     paramlist = parse_util::get_param(tokens[0]);
 
     params = parse_util::split_param(paramlist);
-    EXPECT_TRUE(params.size() == 2);
-    EXPECT_TRUE(params[0] == "a");
-    EXPECT_TRUE(params[1] == "b");
+    REQUIRE(params.size() == 2);
+    REQUIRE(params[0] == "a");
+    REQUIRE(params[1] == "b");
 
     paramlist = parse_util::get_param(tokens[1]);
 
     params = parse_util::split_param(paramlist);
-    EXPECT_TRUE(params.size() == 2);
-    EXPECT_TRUE(params[0] == "a");
-    EXPECT_TRUE(params[1] == "b");
+    REQUIRE(params.size() == 2);
+    REQUIRE(params[0] == "a");
+    REQUIRE(params[1] == "b");
 
     paramlist = parse_util::get_param(tokens[2]);
 
     params = parse_util::split_param(paramlist);
-    EXPECT_TRUE(params.size() == 3);
-    EXPECT_TRUE(params[0] == "a");
-    EXPECT_TRUE(params[1] == "b");
-    EXPECT_TRUE(params[2] == "c");
+    REQUIRE(params.size() == 3);
+    REQUIRE(params[0] == "a");
+    REQUIRE(params[1] == "b");
+    REQUIRE(params[2] == "c");
 }
 
-TEST(ParseUtils, parsedouble)
+TEST_CASE("ParseUtils4", "parsedouble")
 {
     string a = "token1 token2 token3";
     string b = "instr1; instr2; instr3;";
@@ -120,23 +120,26 @@ TEST(ParseUtils, parsedouble)
 
     tokens = parse_util::split(d, " ");
 
-    EXPECT_TRUE(tokens.size() == 4);
-    EXPECT_TRUE(tokens[0] == "set");
-    EXPECT_TRUE(tokens[1] == "123.34");
-    EXPECT_TRUE(tokens[2] == "234.45");
-    EXPECT_TRUE(tokens[3] == "345.56");
+    REQUIRE(tokens.size() == 4);
+    REQUIRE(tokens[0] == "set");
+    REQUIRE(tokens[1] == "123.34");
+    REQUIRE(tokens[2] == "234.45");
+    REQUIRE(tokens[3] == "345.56");
   
     parse_util::parse_double(tokens[0], n, unit);
-    EXPECT_TRUE(n == 0);
+    REQUIRE(n == 0);
 
     parse_util::parse_double(tokens[1], n, unit);
-    EXPECT_TRUE(n == 123.34);
+    REQUIRE(n == 123.34);
 
     parse_util::parse_double("3s", n, unit);
-    EXPECT_TRUE(n == 3 && unit == "s");
+    REQUIRE(n == 3);
+    REQUIRE(unit == "s");
     parse_util::parse_double(".3s", n, unit);
-    EXPECT_TRUE(n == 0.3 && unit == "s");
+    REQUIRE(n == 0.3);
+    REQUIRE(unit == "s");
     parse_util::parse_double(".3us", n, unit);
-    EXPECT_TRUE(n == 0.3 && unit == "us");
+    REQUIRE(n == 0.3);
+    REQUIRE(unit == "us");
 }
 

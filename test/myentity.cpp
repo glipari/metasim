@@ -9,7 +9,6 @@
 
 using namespace std;
 
-
 MyEntity::MyEntity() : Entity(""),
 		       afirst(false),
 		       bfirst(false),
@@ -20,7 +19,7 @@ MyEntity::MyEntity() : Entity(""),
     register_handler(eventC, this, &MyEntity::onEventC);
 }
 
-MyEntity::MyEntity(char *n) : Entity(n),
+MyEntity::MyEntity(const std::string &n) : Entity(n),
 			      afirst(false),
 			      bfirst(false),
 			      count(0)

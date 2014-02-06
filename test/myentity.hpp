@@ -14,27 +14,27 @@
 using namespace MetaSim;
 
 class MyEntity : public MetaSim::Entity {
-        bool afirst;
-        bool bfirst;
-
-        int count;
-
-        MetaSim::GEvent<MyEntity> eventA;
-        MetaSim::GEvent<MyEntity> eventB;
-        MetaSim::GEvent<MyEntity> eventC;
-
+    bool afirst;
+    bool bfirst;
+    
+    int count;
+    
+    MetaSim::GEvent<MyEntity> eventA;
+    MetaSim::GEvent<MyEntity> eventB;
+    MetaSim::GEvent<MyEntity> eventC;
+    
 public:
-        MyEntity();
-        MyEntity(char *n);
-
-        void onEventA(MetaSim::Event *);
-        void onEventB(MetaSim::Event *);
-        void onEventC(MetaSim::Event *);
-
-        void newRun();
-        void endRun();
-        bool isAFirst();
-        int getCounter();
+    MyEntity();
+    MyEntity(const std::string &n);
+    
+    void onEventA(MetaSim::Event *);
+    void onEventB(MetaSim::Event *);
+    void onEventC(MetaSim::Event *);
+    
+    void newRun();
+    void endRun();
+    bool isAFirst();
+    int getCounter();
 };
 
 

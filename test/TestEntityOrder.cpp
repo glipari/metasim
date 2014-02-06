@@ -4,14 +4,16 @@
 #include <vector>
 #include "myentity.hpp"
 
-#include "gtest/gtest.h"
+//#include "gtest/gtest.h"
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
 
 using namespace std;
 
-TEST(TestEventOrder, testPost)
+TEST_CASE("TestEventOrder", "testPost")
 { 
     MyEntity me("Pippo");
     SIMUL.run(12);
-    EXPECT_TRUE(me.isAFirst());
-    EXPECT_TRUE(me.getCounter() == 2);
+    REQUIRE(me.isAFirst());
+    REQUIRE(me.getCounter() == 2);
 }

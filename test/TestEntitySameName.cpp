@@ -2,25 +2,24 @@
 #include <memory>
 #include <entity.hpp>
 #include "myentity.hpp"
-
-#include "gtest/gtest.h"
+#include <catch.hpp>
 
 using namespace MetaSim;
 
-TEST(TestEntitySameName, testName)
+TEST_CASE("TestEntitySameName", "testName")
 {
     std::unique_ptr<MyEntity> me(new MyEntity("name"));
 
     Entity *p = Entity::_find("name");
-    EXPECT_TRUE( p == me.get() );
-    EXPECT_TRUE( p == Entity::getPointer( me->getID() ) );
+    REQUIRE( p == me.get() );
+    REQUIRE( p == Entity::getPointer( me->getID() ) );
     
     try {
         MyEntity e2("name");
-        EXPECT_TRUE( false );
+        REQUIRE( false );
     } catch (...) {
-        EXPECT_TRUE( true );
+        REQUIRE( true );
     }
     p = Entity::getPointer( me->getID() + 1 );
-    EXPECT_TRUE( p == 0 );
+    REQUIRE( p == 0 );
 }
